@@ -1,0 +1,4 @@
+[submodule "SeaIceConcentrationEdge_ATBD"]
+	path = SeaIceConcentrationEdge_ATBD
+	url = https://github.com/CIMR-L2PAD/SeaIceConcentrationEdge_ATBD.git
+	branch = gh-pages
