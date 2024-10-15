@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.ATBD_TOKEN }}
-          submodules: true  # Ensure submodules are initialized and updated
+          submodules: recursive  # Ensure submodules are initialized and updated recursively
 
       # Debugging steps
       - name: Print Git Configuration
@@ -29,14 +29,10 @@ jobs:
         run: |
           git submodule status
 
-      - name: Fetch All Branches
-        run: |
-          git fetch --all
-
-      - name: Checkout gh-pages branch for Submodule
+      - name: Fetch Remote Branch for Submodule
         run: |
           cd SeaIceConcentrationEdge_ATBD
-          git checkout gh-pages || git checkout -b gh-pages origin/gh-pages
+          git fetch origin gh-pages:gh-pages  # Fetch the gh-pages branch
 
       - name: Update submodules
         run: |
