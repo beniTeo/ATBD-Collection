@@ -13,7 +13,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.ATBD_TOKEN }}  # Use your GitHub token stored as a secret
+          token: ${{ secrets.ATBD_TOKEN }}
           submodules: true  # Ensure submodules are initialized and updated
 
       - name: Update submodules
@@ -28,4 +28,4 @@ jobs:
           git commit -m "Auto-update: Updated submodules"
           git push
         env:
-          ATBD_TOKEN: ${{ secrets.ATBD_TOKEN }}  # Use the GitHub token for pushing changes
+          ATBD_TOKEN: ${{ secrets.ATBD_TOKEN }}
