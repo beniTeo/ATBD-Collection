@@ -33,6 +33,11 @@ jobs:
         run: |
           git fetch --all
 
+      - name: Checkout gh-pages branch for Submodule
+        run: |
+          cd SeaIceConcentrationEdge_ATBD
+          git checkout gh-pages || git checkout -b gh-pages origin/gh-pages
+
       - name: Update submodules
         run: |
           git submodule update --remote --recursive || {
