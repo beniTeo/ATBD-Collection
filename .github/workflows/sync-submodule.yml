@@ -16,29 +16,12 @@ jobs:
           token: ${{ secrets.ATBD_TOKEN }}
           submodules: recursive  # Initialize submodules
 
-      # Debugging steps
-      - name: Print Git Configuration
-        run: |
-          git config --list
-
-      - name: Print Current Branch
-        run: |
-          git branch -a
-
-      - name: Print Submodule Status
-        run: |
-          git submodule status
-
-      - name: Fetch Remote Branch for Submodule
-        run: |
-          cd SeaIceConcentrationEdge_ATBD
-          git fetch origin gh-pages:gh-pages  # Fetch the gh-pages branch
 
       - name: Check Out gh-pages Branch
         run: |
           cd SeaIceConcentrationEdge_ATBD
-          git checkout gh-pages || git checkout -b gh-pages origin/gh-pages  # Create branch if it doesn't exist
-
+          git checkout gh-pages
+          
       - name: Update submodule to latest
         run: |
           cd SeaIceConcentrationEdge_ATBD
