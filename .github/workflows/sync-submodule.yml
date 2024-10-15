@@ -44,13 +44,28 @@ jobs:
           cd SeaIceConcentrationEdge_ATBD
           git pull origin gh-pages  # Pull latest changes from gh-pages
 
-      - name: Commit and push changes
+      - name: Check for changes to commit
         run: |
           cd SeaIceConcentrationEdge_ATBD
-          git config --global user.name "github-actions"
-          git config --global user.email "action@github.com"
-          git add .
-          git commit -m "Auto-update: Updated submodules" || echo "No changes to commit"
-          git push
+          if [[ -n $(git diff --stat) ]]; then
+            echo "Changes detected."
+            echo "1" > ../changes.txt  # Create a flag file indicating changes
+          else
+            echo "No changes detected."
+            echo "0" > ../changes.txt  # Create a flag file indicating no changes
+          fi
+
+      - name: Commit and push changes if any
+        run: |
+          cd SeaIceConcentrationEdge_ATBD
+          if [[ -f ../changes.txt && $(cat ../changes.txt) -eq 1 ]]; then
+            git config --global user.name "github-actions"
+            git config --global user.email "action@github.com"
+            git add .
+            git commit -m "Auto-update: Updated submodules"
+            git push --set-upstream origin gh-pages  # Push changes and set upstream
+          else
+            echo "Skipping commit and push, no changes to commit."
+          fi
         env:
           ATBD_TOKEN: ${{ secrets.ATBD_TOKEN }}
