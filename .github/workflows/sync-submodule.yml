@@ -16,6 +16,23 @@ jobs:
           token: ${{ secrets.ATBD_TOKEN }}
           submodules: true  # Ensure submodules are initialized and updated
 
+      # Debugging steps
+      - name: Print Git Configuration
+        run: |
+          git config --list
+
+      - name: Print Current Branch
+        run: |
+          git branch -a
+
+      - name: Print Submodule Status
+        run: |
+          git submodule status
+
+      - name: Fetch All Branches
+        run: |
+          git fetch --all
+
       - name: Update submodules
         run: |
           git submodule update --remote --recursive || {
