@@ -17,6 +17,11 @@ jobs:
           submodules: recursive  # Initialize submodules
 
 
+      - name: Fetch Remote Branch for Submodule
+        run: |
+          cd SeaIceConcentrationEdge_ATBD
+          git fetch origin gh-pages:gh-pages  # Fetch the gh-pages branch
+
       - name: Check Out gh-pages Branch
         run: |
           cd SeaIceConcentrationEdge_ATBD
