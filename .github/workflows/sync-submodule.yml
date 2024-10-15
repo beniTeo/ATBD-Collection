@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.ATBD_TOKEN }}
-          submodules: recursive  # Ensure submodules are initialized and updated recursively
+          submodules: recursive  # Initialize submodules
 
       # Debugging steps
       - name: Print Git Configuration
@@ -34,17 +34,19 @@ jobs:
           cd SeaIceConcentrationEdge_ATBD
           git fetch origin gh-pages:gh-pages  # Fetch the gh-pages branch
 
-      - name: Update submodules
+      - name: Check Out gh-pages Branch
         run: |
-          git submodule update --remote --recursive || {
-            echo "Failed to update submodules"
-            git submodule status  # Show status of submodules
-            git branch -a         # Show all branches
-            exit 1
-          }
+          cd SeaIceConcentrationEdge_ATBD
+          git checkout gh-pages || git checkout -b gh-pages origin/gh-pages  # Create branch if it doesn't exist
+
+      - name: Update submodule to latest
+        run: |
+          cd SeaIceConcentrationEdge_ATBD
+          git pull origin gh-pages  # Pull latest changes from gh-pages
 
       - name: Commit and push changes
         run: |
+          cd SeaIceConcentrationEdge_ATBD
           git config --global user.name "github-actions"
           git config --global user.email "action@github.com"
           git add .
