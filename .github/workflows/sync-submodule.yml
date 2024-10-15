@@ -18,7 +18,13 @@ jobs:
 
       - name: Update submodules
         run: |
-          git submodule update --remote --recursive  # Pull the latest changes from all submodules
+            git submodule update --remote --recursive || {
+            echo "Failed to update submodules"
+            git submodule status  # Show status of submodules
+            git branch -a         # Show all branches
+            exit 1
+          }
+
 
       - name: Commit and push changes
         run: |
