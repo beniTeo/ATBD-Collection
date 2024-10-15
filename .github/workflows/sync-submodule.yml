@@ -18,20 +18,19 @@ jobs:
 
       - name: Update submodules
         run: |
-            git submodule update --remote --recursive || {
+          git submodule update --remote --recursive || {
             echo "Failed to update submodules"
             git submodule status  # Show status of submodules
             git branch -a         # Show all branches
             exit 1
           }
 
-
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "action@github.com"
           git add .
-          git commit -m "Auto-update: Updated submodules"
+          git commit -m "Auto-update: Updated submodules" || echo "No changes to commit"
           git push
         env:
           ATBD_TOKEN: ${{ secrets.ATBD_TOKEN }}
